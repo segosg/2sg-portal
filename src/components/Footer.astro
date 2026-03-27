@@ -1,0 +1,24 @@
+---
+const links = [
+  { href: 'https://github.com/2sg',      label: 'GitHub'  },
+  { href: 'https://linkedin.com/in/2sg', label: 'LinkedIn'},
+  { href: 'mailto:hello@2sg.io',         label: 'Email'   },
+];
+---
+<footer class="border-t border-forge-border mt-24">
+  <div class="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <span class="font-mono text-xs text-forge-muted">
+      © {new Date().getFullYear()} 2sg.io — Forge de solutions data
+    </span>
+    <ul class="flex items-center gap-6">
+      {links.map(({ href, label }) => (
+        <li>
+          <a href={href} target="_blank" rel="noopener noreferrer"
+             class="font-mono text-xs text-forge-body hover:text-forge-primary transition-colors duration-200">
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>

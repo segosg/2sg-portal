@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout title="Lab">
+  <Nav slot="nav" />
+  <section class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+    <p class="font-mono text-forge-secondary text-sm mb-4">~/lab</p>
+    <h1 class="font-mono text-4xl font-bold text-forge-heading mb-8">Lab</h1>
+    <p class="text-forge-body font-sans">— Projets en forge.</p>
+  </section>
+  <Footer slot="footer" />
+</BaseLayout>

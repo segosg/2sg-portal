@@ -1,0 +1,30 @@
+---
+const links = [
+  { href: '/blog',  label: '~/blog'  },
+  { href: '/lab',   label: '~/lab'   },
+  { href: '/cv',    label: '~/cv'    },
+  { href: '/about', label: '~/about' },
+];
+const currentPath = Astro.url.pathname;
+---
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-forge-border bg-forge-bg/80 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="/" class="font-mono text-forge-primary font-bold text-lg tracking-tight hover:opacity-80 transition-opacity">
+      2sg<span class="text-forge-secondary animate-blink">_</span>
+    </a>
+    <ul class="flex items-center gap-6">
+      {links.map(({ href, label }) => (
+        <li>
+          <a href={href} class:list={[
+            'font-mono text-sm transition-colors duration-200',
+            currentPath.startsWith(href)
+              ? 'text-forge-primary'
+              : 'text-forge-body hover:text-forge-heading'
+          ]}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
