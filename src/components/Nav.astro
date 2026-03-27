@@ -9,13 +9,9 @@ const currentPath = Astro.url.pathname;
 ---
 <nav class="fixed top-0 left-0 right-0 z-50 border-b border-forge-border bg-forge-bg/80 backdrop-blur-md">
   <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-
-    <!-- Logo -->
-    <a href="/" class="hover:opacity-75 transition-opacity" aria-label="2sg.io">
-      <img src="/logo.svg" alt="2sg logo" class="h-9 w-auto" />
+    <a href="/" class="font-mono text-forge-primary font-bold text-lg tracking-tight hover:opacity-80 transition-opacity">
+      2sg<span class="text-forge-secondary animate-blink">_</span>
     </a>
-
-    <!-- Links -->
     <ul class="flex items-center gap-6">
       {links.map(({ href, label }) => (
         <li>
@@ -30,6 +26,5 @@ const currentPath = Astro.url.pathname;
         </li>
       ))}
     </ul>
-
   </div>
 </nav>
