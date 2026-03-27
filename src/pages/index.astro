@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Logo from '../components/Logo.astro';
 
 const cards = [
   { href: '/blog', label: '~/blog', title: 'Blog',  desc: 'Réflexions sur la data, le product et l\'ingénierie.' },
@@ -21,21 +22,26 @@ const cards = [
     </div>
 
     <div class="max-w-5xl mx-auto w-full pt-20">
-      <p class="font-mono text-forge-muted text-sm mb-8 animate-fade-up">
-        <span class="text-forge-primary">➜</span>
-        <span class="ml-2">2sg.io</span>
-        <span class="text-forge-secondary ml-2">git:(main)</span>
-        <span class="ml-2">✦</span>
-      </p>
+
+        <!-- Logo -->
+        <Logo />
+
+        <!-- Prompt line -->
+        <p class="font-mono text-forge-muted text-sm mb-8 animate-fade-up">
+            <span class="text-forge-primary">➜</span>
+            <span class="ml-2">2sg.io</span>
+            <span class="text-forge-secondary ml-2">git:(main)</span>
+            <span class="ml-2">✦</span>
+        </p>
 
       <h1 class="font-mono text-5xl sm:text-7xl font-bold leading-[1.05] tracking-tight mb-6 animate-fade-up">
-        <span class="text-forge-heading">Data Engineer</span><br />
-        <span class="text-forge-primary">&</span>
-        <span class="text-forge-heading"> Product Manager</span>
+        <span class="text-forge-heading">Analytics & AI Engineering</span><br />
+        <span class="text-forge-primary">Feat</span>
+        <span class="text-forge-heading"> Product Management</span>
       </h1>
 
       <p class="font-mono text-forge-body text-lg sm:text-xl mt-6 mb-12 animate-fade-up">
-        <span class="text-forge-secondary">// </span>Forge de solutions data
+        <span class="text-forge-secondary">// </span>Forge de solutions data & AI
         <span class="inline-block w-[2px] h-5 bg-forge-primary align-middle ml-1 animate-blink"></span>
       </p>
 
