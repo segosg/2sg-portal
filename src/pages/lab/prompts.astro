@@ -1,8 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
 import PromptLibrary from '../../components/PromptLibrary.jsx';
 ---
 
 <BaseLayout title="Prompt Library">
-  <PromptLibrary client:only="react" />
+  <Nav slot="nav" />
+
+  <section class="max-w-7xl mx-auto px-6 pt-32 pb-24">
+    <p class="font-mono text-forge-secondary text-sm mb-4">~/lab/prompts</p>
+    <h1 class="font-mono text-4xl font-bold text-forge-heading mb-2">Prompt Library</h1>
+    <p class="font-sans text-forge-body text-sm mb-10">
+      Une collection de prompts LLM structurés, testés et paramétrables — ouverts en lecture, gérés en
+      <a href="?admin=1" class="text-forge-muted hover:text-forge-primary transition-colors duration-200 font-mono text-xs">admin</a>.
+    </p>
+
+    <PromptLibrary client:only="react" />
+  </section>
+
+  <Footer slot="footer" />
 </BaseLayout>
