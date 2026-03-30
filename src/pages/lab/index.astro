@@ -17,13 +17,9 @@ const projects = [
   <section class="max-w-5xl mx-auto px-6 pt-32 pb-24">
     <p class="font-mono text-forge-secondary text-sm mb-4">~/lab</p>
     <h1 class="font-mono text-4xl font-bold text-forge-heading mb-8">Lab</h1>
-
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
       {projects.map(({ href, label, title, desc }) => (
-        
-          href={href}
-          class="group relative block border border-forge-border rounded-lg p-6 bg-forge-surface hover:border-forge-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_32px_#3DFF9A18]"
-        <a>
+        <a href={href} class="group relative block border border-forge-border rounded-lg p-6 bg-forge-surface hover:border-forge-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_32px_#3DFF9A18]">
           <p class="font-mono text-xs text-forge-secondary mb-4">{label}</p>
           <h2 class="font-mono text-2xl font-bold text-forge-heading mb-2 group-hover:text-forge-primary transition-colors duration-200">
             {title}
