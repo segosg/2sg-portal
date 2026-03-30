@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { Globe, Lock, Copy, Check, ChevronLeft, X, Plus, Zap } from "lucide-react";
+import { Globe, Lock, Copy, Check, X, Plus, Zap } from "lucide-react";
 
 const supabase = createClient(
   import.meta.env.PUBLIC_SUPABASE_URL,
@@ -319,17 +319,12 @@ export default function PromptLibrary() {
   prompts.forEach(p => { if (counts[p.status] !== undefined) counts[p.status]++; });
 
   return (
-    <div style={{ display: "flex", minHeight: "calc(100vh - 64px)", background: C.bg, color: C.heading, fontFamily: SANS }}>
+    <div style={{ display: "flex", minHeight: "60vh", background: C.bg, color: C.heading, fontFamily: SANS }}>
       <style>{`*{box-sizing:border-box} ::-webkit-scrollbar{width:3px} ::-webkit-scrollbar-thumb{background:${C.border};border-radius:2px} select option{background:${C.surface};color:${C.heading}} input::placeholder,textarea::placeholder{color:${C.muted}} input:focus,textarea:focus,select:focus{border-color:${C.primary}!important;outline:none}`}</style>
 
       {/* Sidebar */}
       <aside style={{ width: 176, flexShrink: 0, borderRight: `1px solid ${C.border}`, background: C.bg, overflowY: "auto" }}>
         <div style={{ padding: "18px 14px" }}>
-          <a href="/lab" style={{ display: "flex", alignItems: "center", gap: 5, color: C.body, textDecoration: "none", fontFamily: MONO, fontSize: 10, marginBottom: 22, transition: "color 0.15s" }}
-            onMouseEnter={e => e.currentTarget.style.color = C.primary}
-            onMouseLeave={e => e.currentTarget.style.color = C.body}>
-            <ChevronLeft size={12} />~/lab
-          </a>
           <div style={{ fontSize: 11, fontWeight: 800, color: C.primary, fontFamily: MONO, marginBottom: 20, letterSpacing: "-0.01em" }}>prompt/lib</div>
 
           {isAdmin && <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5, marginBottom: 18 }}>
