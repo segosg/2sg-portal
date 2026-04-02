@@ -24,7 +24,7 @@ jobs:
           cache-dependency-path: crawler/requirements.txt
 
       - name: Install dependencies
-        run: pip install -r crawler/requirements.txt
+        run: pip install --no-cache-dir -r crawler/requirements.txt
 
       - name: Run crawler
         env:
