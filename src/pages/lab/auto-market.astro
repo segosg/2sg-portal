@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import AutoMarketApp from '../../components/automarket/AutoMarketApp'
+---
+
+<BaseLayout
+  title="auto.market — Analyse de marché automobile"
+  description="Outil d'analyse des annonces et de la décote pour l'achat/revente de véhicules d'occasion en France."
+>
+  <div style="background:#080b12; min-height:100vh;">
+    <AutoMarketApp client:only="react" />
+  </div>
+</BaseLayout>
