@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout title="CV" description="Curriculum Vitae — Ségolène Saumont Greco · Data & AI Engineer">
+<Nav slot="nav" />
 
   <slot name="nav" slot="nav" />
   <slot name="footer" slot="footer" />
@@ -25,7 +28,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .cv-container {
       max-width: 960px;
       margin: 0 auto;
-      padding: 48px 40px 80px;
+      padding: 80px 40px 80px;
     }
 
     .term-header {
@@ -448,5 +451,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
   </div>
-
+<Footer slot="footer" />
 </BaseLayout>
