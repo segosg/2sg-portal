@@ -1,14 +1,562 @@
----
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
----
-<BaseLayout title="CV">
-  <Nav slot="nav" />
-  <section class="max-w-5xl mx-auto px-6 pt-32 pb-24">
-    <p class="font-mono text-forge-secondary text-sm mb-4">~/cv</p>
-    <h1 class="font-mono text-4xl font-bold text-forge-heading mb-8">Curriculum Vitae</h1>
-    <p class="text-forge-body font-sans">— En construction.</p>
-  </section>
-  <Footer slot="footer" />
-</BaseLayout>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV | 2sg.io</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161d;
+    --border: #1e2330;
+    --green: #4ade80;
+    --cyan: #67e8f9;
+    --pink: #f472b6;
+    --muted: #4b5563;
+    --text: #cbd5e1;
+    --text-dim: #64748b;
+    --white: #f1f5f9;
+    --accent: #818cf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .nav-logo { color: var(--green); font-weight: 700; text-decoration: none; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a.active { color: var(--white); }
+
+  /* LAYOUT */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* HEADER TERMINAL */
+  .term-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .term-header .prompt { color: var(--green); }
+  .term-header .path { color: var(--cyan); }
+
+  h1.page-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .page-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--pink);
+    margin-bottom: 40px;
+  }
+
+  /* GRID */
+  .cv-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {}
+
+  .s-block { margin-bottom: 32px; }
+  .s-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .s-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .contact-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .contact-item .ci-key { color: var(--accent); min-width: 48px; }
+  .contact-item a { color: var(--cyan); text-decoration: none; }
+  .contact-item a:hover { text-decoration: underline; }
+
+  .lang-item {
+    margin-bottom: 10px;
+  }
+  .lang-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .lang-level {
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .lang-bar {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .lang-bar-fill { height: 100%; background: var(--green); border-radius: 2px; }
+
+  .aside-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .aside-item::before { content: '▸'; color: var(--green); font-size: 9px; }
+
+  /* FORMATIONS */
+  .formation-item {
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 1px solid var(--border);
+  }
+  .formation-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+  }
+  .formation-title {
+    font-size: 12px;
+    color: var(--white);
+    font-weight: 500;
+  }
+  .formation-school {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* MAIN */
+  .main {}
+
+  /* ACCROCHE */
+  .accroche {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--green);
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    font-style: italic;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .st-num { color: var(--text-dim); }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* JOB */
+  .job {
+    margin-bottom: 28px;
+    position: relative;
+    padding-left: 16px;
+  }
+  .job::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: -20px;
+    width: 1px;
+    background: var(--border);
+  }
+  .job:last-child::before { bottom: 0; }
+  .job-dot {
+    position: absolute;
+    left: -3px;
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 1px solid var(--bg);
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .job-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .job-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .job-company {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    margin-bottom: 6px;
+  }
+  .job-context {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    background: var(--bg2);
+    border-left: 2px solid var(--border);
+  }
+
+  .job-items { list-style: none; }
+  .job-items li {
+    font-size: 12px;
+    color: var(--text);
+    margin-bottom: 6px;
+    padding-left: 0;
+    display: flex;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .ji-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--pink);
+    white-space: nowrap;
+    padding-top: 1px;
+    min-width: fit-content;
+  }
+
+  /* PHASE tag */
+  .phase-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(129,140,248,.1);
+    border: 1px solid rgba(129,140,248,.2);
+    padding: 2px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-top: 6px;
+  }
+
+  /* TAGS */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .tag.green { color: var(--green); border-color: rgba(74,222,128,.2); }
+  .tag.cyan { color: var(--cyan); border-color: rgba(103,232,249,.2); }
+  .tag.pink { color: var(--pink); border-color: rgba(244,114,182,.2); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+  }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--cyan); }
+
+  @media (max-width: 700px) {
+    .cv-grid { grid-template-columns: 1fr; }
+    nav { padding: 12px 20px; }
+    .container { padding: 32px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://www.2sg.io">2sg_</a>
+  <div class="nav-links">
+    <a href="https://www.2sg.io/blog">~/blog</a>
+    <a href="https://www.2sg.io/lab">~/lab</a>
+    <a href="https://www.2sg.io/cv" class="active">~/cv</a>
+    <a href="https://www.2sg.io/about">~/about</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="term-header">
+    <span class="prompt">➜</span>
+    <span class="path">~/cv</span>
+  </div>
+  <h1 class="page-title">Curriculum Vitae</h1>
+  <div class="page-subtitle">// Ségolène Saumont Greco · Data & AI Engineer</div>
+
+  <div class="cv-grid">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="s-block">
+        <div class="s-label">contact</div>
+        <div class="contact-item"><span class="ci-key">mail</span><a href="mailto:segolene.saumont@gmail.com">segolene.saumont@gmail.com</a></div>
+        <div class="contact-item"><span class="ci-key">tel</span>07 68 04 06 06</div>
+        <div class="contact-item"><span class="ci-key">web</span><a href="https://www.2sg.io">2sg.io</a></div>
+        <div class="contact-item"><span class="ci-key">li</span><a href="https://linkedin.com/in/segolenes">segolenes</a></div>
+        <div class="contact-item"><span class="ci-key">loc</span>Nozay, 91620</div>
+      </div>
+
+      <div class="s-block">
+        <div class="s-label">langues</div>
+        <div class="lang-item">
+          <div class="lang-name">Français <span class="lang-level">natif</span></div>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-name">Anglais <span class="lang-level">TOEIC 945</span></div>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-name">Coréen <span class="lang-level">courant</span></div>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+
+      <div class="s-block">
+        <div class="s-label">formation</div>
+        <div class="formation-item">
+          <div class="formation-year">2026</div>
+          <div class="formation-title">RNCP 7 — Ingénieur IA</div>
+          <div class="formation-school">DataScientest · ML, DL, MLOps, Data Eng.</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-year">2025</div>
+          <div class="formation-title">Certification Data Analyst</div>
+          <div class="formation-school">Mines Paris Executive Education</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-year">2019</div>
+          <div class="formation-title">Mastère Commerce International</div>
+          <div class="formation-school">IAE Poitiers FAD</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-year">2013–14</div>
+          <div class="formation-title">Master Informatique avancée</div>
+          <div class="formation-school">Université de Franche-Comté · parcours recherche</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-year">2013</div>
+          <div class="formation-title">Échange universitaire</div>
+          <div class="formation-school">KAIST — Korean Advanced Institute of Science and Technology</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-year">2011–13</div>
+          <div class="formation-title">Premier cycle Ingénieur Informatique</div>
+          <div class="formation-school">UTBM</div>
+        </div>
+        <div class="formation-item">
+          <div class="formation-year">2011</div>
+          <div class="formation-title">DUT Informatique</div>
+          <div class="formation-school">IUT d'Orsay</div>
+        </div>
+      </div>
+
+      <div class="s-block">
+        <div class="s-label">à côté</div>
+        <div class="aside-item">Sapeure-pompier volontaire</div>
+        <div class="aside-item">Parapente · Wakeboard · Trail</div>
+        <div class="aside-item">Musique</div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <div class="accroche">
+        Ingénieure data avec un ancrage technique en architecture et modélisation, j'interviens à l'intersection de la gouvernance des données, de l'optimisation des modèles et de l'IA appliquée. Mon parcours mêle recherche algorithmique, delivery terrain et pilotage stratégique dans des environnements à contraintes fortes — souveraineté des données, conformité réglementaire, obligation de résultat.
+      </div>
+
+      <!-- EXPÉRIENCES -->
+      <div class="section">
+        <div class="section-title"><span class="st-num">01</span> expériences</div>
+
+        <!-- FIVES PHASE 2 -->
+        <div class="job">
+          <div class="job-dot"></div>
+          <div class="job-header">
+            <span class="job-title">Data Engineer & Analytics Lead</span>
+            <span class="job-date">Sept 2023 – Présent</span>
+          </div>
+          <div class="job-company">Fives Maintenance</div>
+          <div class="phase-tag">// Phase 2 — Data Platform & IA</div>
+          <div class="job-context">DSI interne · 30+ clients industriels · 5 secteurs · 100 000+ équipements sous contrat à obligation de résultat</div>
+          <ul class="job-items">
+            <li><span class="ji-key">architecture</span>Déploiement d'une Data Platform souveraine S3NS (GCP/Thales, SecNumCloud) · consolidation multi-sources hétérogènes vers BigQuery · contribution aux choix d'architecture et de stack.</li>
+            <li><span class="ji-key">modélisation</span>Conception et optimisation de modèles SCD2 sur BigQuery · réduction jusqu'à 90% du volume traité · historisation contextuelle complète · portée en autonomie.</li>
+            <li><span class="ji-key">ML</span>Développement de modèles BigQuery ML sur données machines industrielles · clustering, time series, régression, classification · objectif maintenance prédictive · phase expérimentale.</li>
+            <li><span class="ji-key">GenAI</span>Participation à la conception d'un environnement GenAI compliant CRA pour 700+ collaborateurs · stack open source auto-hébergée + Copilot · évaluation d'une solution RAG · benchmark embedding/chunking · première itération à 65%, itération en cours.</li>
+            <li><span class="ji-key">gouvernance</span>MDM opérationnel from scratch · 20+ référentiels transverses · animation des data owners · SSOT effective.</li>
+            <li><span class="ji-key">BI</span>Animation équipe Power BI (50–100 utilisateurs) · DAX, Power Query, Power Automate · migration on-premise → GCP sur 2 ans.</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag green">BigQuery</span><span class="tag green">GCP</span><span class="tag green">S3NS</span><span class="tag cyan">Python</span><span class="tag cyan">SQL</span><span class="tag cyan">SCD2</span><span class="tag pink">RAG</span><span class="tag pink">BigQuery ML</span><span class="tag">Power BI</span><span class="tag">MDM</span>
+          </div>
+        </div>
+
+        <!-- FIVES PHASE 1 -->
+        <div class="job">
+          <div class="job-dot" style="background:var(--accent)"></div>
+          <div class="job-header">
+            <span class="job-title">Cheffe de Projet Digital & Innovation</span>
+            <span class="job-date">Sept 2022 – Sept 2023</span>
+          </div>
+          <div class="job-company">Fives Maintenance</div>
+          <div class="phase-tag" style="color:var(--accent);border-color:rgba(129,140,248,.3)">// Phase 1 — Digital & Gouvernance</div>
+          <ul class="job-items">
+            <li><span class="ji-key">digit.</span>Conception et déploiement d'un outil de digitalisation des gammes de maintenance (Ermeo/Causeway) · modélisation BDD relationnelle from scratch (~30 tables) · conception des formulaires terrain.</li>
+            <li><span class="ji-key">QSSE</span>Déploiement d'un outil digital de gestion QSSE · pilotage complet (expression de besoin, specs fonctionnelles, planning, budget, recette) · intégration SI existant.</li>
+            <li><span class="ji-key">gouvernance</span>Premiers travaux de gouvernance et d'interopérabilité · cartographie des flux, référentiels, standards d'échange.</li>
+          </ul>
+        </div>
+
+        <!-- BSD -->
+        <div class="job">
+          <div class="job-dot" style="background:var(--text-dim)"></div>
+          <div class="job-header">
+            <span class="job-title">Cheffe de Projet SI</span>
+            <span class="job-date">Fév 2018 – Fév 2022</span>
+          </div>
+          <div class="job-company">BSD Bureautique Services Développement</div>
+          <div class="job-context">ESN · grands comptes publics et privés : UNESCO, EDF, CD95, SDIS 35, Musée du Louvre, EPPDCSI</div>
+          <ul class="job-items">
+            <li><span class="ji-key">delivery</span>Pilotage de projets d'intégration SharePoint/O365 et migration · automatisation de processus métier (Nintex) · méthodes agiles.</li>
+            <li><span class="ji-key">data</span>Modélisation de processus et cartographie des flux de données entre systèmes · reporting et tableaux de bord sur données projets.</li>
+            <li><span class="ji-key">avant-vente</span>Recueil de besoins, spécifications, user stories, suivi planning et budget, tests, recette, formation · avant-vente et chiffrage.</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag">SharePoint</span><span class="tag">O365</span><span class="tag">Nintex</span><span class="tag">Agile</span>
+          </div>
+        </div>
+
+        <!-- AEFC -->
+        <div class="job">
+          <div class="job-dot" style="background:var(--text-dim)"></div>
+          <div class="job-header">
+            <span class="job-title">Entrepreneur & Directrice Technique</span>
+            <span class="job-date">Sept 2013 – Fév 2018</span>
+          </div>
+          <div class="job-company">AEFC / Sejong Equestrian Center / Little Korea · France, Corée du Sud, Asie</div>
+          <ul class="job-items">
+            <li><span class="ji-key">tech</span>Direction technique et stratégique du projet Sejong · décisions d'architecture des installations, recrutement, management, formation · levée de fonds auprès du Ministère de l'Agriculture coréen.</li>
+            <li><span class="ji-key">commerce</span>Gestion commerciale AEFC · import-export (chevaux, équipements, machinerie agricole) · négociations internationales (France, Corée, Chine, Pakistan, Inde) · budget jusqu'à 500K€/an.</li>
+          </ul>
+        </div>
+
+        <!-- KISTI -->
+        <div class="job">
+          <div class="job-dot" style="background:var(--pink)"></div>
+          <div class="job-header">
+            <span class="job-title">Junior Researcher</span>
+            <span class="job-date">Jan 2012 – Juin 2013</span>
+          </div>
+          <div class="job-company">Korea Institute of Science and Technology Information · Daejeon, South Korea</div>
+          <div class="job-context">Institut national de supercalcul · Partenariat CNRS/FKPPL (France Korea Particle Physics Laboratories)</div>
+          <ul class="job-items">
+            <li><span class="ji-key">HTCaaS</span>Contribution technique au middleware HTCaaS · focus scheduling multi-niveaux et resource allocation sur infrastructures supercomputing distribuées (PLSI — 18 supercomputers, 100 TFLops) · expérimentation et documentation technique.</li>
+            <li><span class="ji-key">recherche</span>Co-auteure d'une publication académique (KAIST) sur un schéma de re-routage switch-based pour QoS sur réseaux multi-chemins OpenFlow · contribution aux algorithmes FQST/MRIT et simulation NS2.</li>
+            <li><span class="ji-key">médiation</span>Médiation technique France-Corée sur le projet FKPPL · démarchage de laboratoires de biologie et de chimie sur la plateforme HTCaaS.</li>
+          </ul>
+          <div class="tag-row">
+            <span class="tag pink">HPC</span><span class="tag pink">Scheduling</span><span class="tag pink">OpenFlow</span><span class="tag pink">QoS</span><span class="tag">Publication académique</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 2sg.io — Forge de solutions data</span>
+  <div style="display:flex;gap:20px">
+    <a href="https://github.com/segosg">GitHub</a>
+    <a href="https://linkedin.com/in/segolenes">LinkedIn</a>
+    <a href="mailto:segolene.saumont@gmail.com">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
